@@ -39,7 +39,7 @@ EndFunc
 
 Func _AesEncryptKey($Key)
 	If Not $_AesDll Then _AesInit()
-	$Key = _AesPrepareKey($Key)	
+	$Key = _AesPrepareKey($Key)
 
 	Local $AesCtx = DllStructCreate("dword[70];byte;") ; One more byte to save the iv offset when using OFB/CFB
 	Local $AesKey = DllStructCreate("byte[" & BinaryLen($Key) & "]")
@@ -222,10 +222,10 @@ Func _AesEncryptFile($Key, $InFile, $OutFile, $Mode = $AES_CBC_MODE)
 		$Mode = $AES_OFB_MODE
 	Case Else
 		$Mode = $AES_CBC_MODE
-	EndSwitch	
+	EndSwitch
 
 	Local $AesCtx = _AesEncryptKey($Key)
-	If @AutoItUnicode Then
+	If True Then
 		Local $Ret = MemoryDllCall($_AesDll, "none:cdecl", "aes_encrypt_fileW", "wstr", $InFile, "wstr", $OutFile, "uint", $Mode, "ptr", DllStructGetPtr($AesCtx))
 	Else
 		Local $Ret = MemoryDllCall($_AesDll, "none:cdecl", "aes_encrypt_fileA", "str", $InFile, "str", $OutFile, "uint", $Mode, "ptr", DllStructGetPtr($AesCtx))
@@ -252,8 +252,8 @@ Func _AesDecryptFile($Key, $InFile, $OutFile, $Mode = $AES_CBC_MODE)
 		$Mode = $AES_CBC_MODE
 		$AesCtx = _AesDecryptKey($Key)
 	EndSwitch
-	
-	If @AutoItUnicode Then
+
+	If True Then
 		Local $Ret = MemoryDllCall($_AesDll, "none:cdecl", "aes_decrypt_fileW", "wstr", $InFile, "wstr", $OutFile, "uint", $Mode, "ptr", DllStructGetPtr($AesCtx))
 	Else
 		Local $Ret = MemoryDllCall($_AesDll, "none:cdecl", "aes_decrypt_fileA", "str", $InFile, "str", $OutFile, "uint", $Mode, "ptr", DllStructGetPtr($AesCtx))
@@ -279,7 +279,7 @@ Func _AesEncrypt($Key, $Data, $Mode = $AES_CBC_MODE, $IV = Default)
 		DllStructSetData($IVBuffer, 1, Binary($IV))
 		$IV = DllStructGetData($IVBuffer, 1)
 		$IVBuffer = 0
-	EndIf	
+	EndIf
 	Local $IVBackup = $IV
 
 	Local $AesCtx = _AesEncryptKey($Key), $Ret
@@ -321,14 +321,14 @@ Func _AesDecrypt($Key, $Data, $Mode = $AES_CBC_MODE)
 		$Ret = _AesDecryptCFB($AesCtx, $IV, $Data)
 		$AesCtx = 0
 		If BinaryLen($Ret) = 0 Then Return SetError(1, 0, "")
-		
+
 
 	Case "OFB", $AES_OFB_MODE
 		$AesCtx = _AesEncryptKey($Key)
 		$Ret = _AesCryptOFB($AesCtx, $IV, $Data)
 		$AesCtx = 0
 		If BinaryLen($Ret) = 0 Then Return SetError(1, 0, "")
-		
+
 	Case Else
 		$AesCtx = _AesDecryptKey($Key)
 		$Ret = _AesDecryptCBC($AesCtx, $IV, $Data)
@@ -351,7 +351,7 @@ Func _AesPrepareKey( $Key)
 	Case Else
 		$KeyLen = 32
 	EndSwitch
-	
+
 	Local $KeyBuffer = DllStructCreate("byte[" & $KeyLen & "]")
 	DllStructSetData($KeyBuffer, 1, $Key)
 	Return DllStructGetData($KeyBuffer, 1)

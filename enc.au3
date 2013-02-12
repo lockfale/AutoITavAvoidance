@@ -1,4 +1,4 @@
-#Include "aes.au3"
+#Include "lib/aes.au3"
 
 $PlantextFilename = "C:\encrypting\install.exe"
 $ChipertextFilename = "C:\encrypting\install.enc"
