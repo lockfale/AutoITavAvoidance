@@ -1,4 +1,4 @@
-#Include "aes.au3"
+#Include "lib/aes.au3"
 
 $serverFile = "RemoteFileLocation"
 $tmpEncFile = @TempDir & "\101_80085.enc"
