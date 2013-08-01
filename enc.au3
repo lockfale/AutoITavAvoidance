@@ -1,6 +1,6 @@
 #Include "lib/aes.au3"
 
-$PlantextFilename = "C:\encrypting\install.exe"
-$ChipertextFilename = "C:\encrypting\install.enc"
+$PlantextFilename = "UnencryptedSource"
+$ChipertextFilename = "EncryptedDestination"
 
-_AesEncryptFile("lolwut",  $PlantextFilename, $ChipertextFilename, "CFB")
+_AesEncryptFile("AESKey",  $PlantextFilename, $ChipertextFilename, "CFB")
